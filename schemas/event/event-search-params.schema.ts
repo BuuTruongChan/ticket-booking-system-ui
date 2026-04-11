@@ -1,18 +1,24 @@
 import { PAGINATION } from "@/core/constants";
 import { z } from "zod";
+import { DateRangeQuerySchema, PaginationQuerySchema } from "@schemas/common";
+
 import { EventStatus } from "./event.schema";
 
-export const GetEventsParamsSchema = z.object({
-  page: z.coerce.number().min(1).optional().default(PAGINATION.DEFAULT_PAGE),
+const EventPaginationQuerySchema = PaginationQuerySchema.extend({
+  page: z.coerce.number().int().min(1).default(PAGINATION.DEFAULT_PAGE),
   limit: z.coerce
     .number()
+    .int()
     .min(PAGINATION.MIN_LIMIT)
-    .optional()
+    .max(100)
     .default(PAGINATION.DEFAULT_LIMIT),
-  search: z.string().optional(),
+});
+
+export const GetEventsParamsSchema = EventPaginationQuerySchema.merge(
+  DateRangeQuerySchema,
+).extend({
+  search: z.string().trim().min(1).optional(),
   status: z.enum(EventStatus).optional(),
-  dateFrom: z.iso.datetime().optional(),
-  dateTo: z.iso.datetime().optional(),
 });
 
 export type GetEventsParams = z.infer<typeof GetEventsParamsSchema>;

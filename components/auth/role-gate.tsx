@@ -2,13 +2,10 @@
 
 import type { ReactNode } from "react";
 
-import type { CurrentUser } from "@/schemas/api";
+import { hasRequiredRole, ORGANIZER_ALLOWED_ROLES } from "@/lib/auth";
+import type { CurrentUser } from "@schemas/identity";
 
-const DEFAULT_ALLOWED_ROLES: CurrentUser["role"][] = [
-  "ORGANIZER",
-  "ADMIN",
-  "SUPER_ADMIN",
-];
+const DEFAULT_ALLOWED_ROLES = ORGANIZER_ALLOWED_ROLES;
 
 type RoleGateProps = {
   userRole?: CurrentUser["role"] | null;
@@ -23,7 +20,7 @@ export function RoleGate({
   children,
   fallback = null,
 }: RoleGateProps) {
-  const isAllowed = Boolean(userRole && allowedRoles.includes(userRole));
+  const isAllowed = hasRequiredRole(userRole, allowedRoles);
 
   return (
     <>
@@ -32,6 +29,8 @@ export function RoleGate({
         data-entity-type="permission-gate"
         data-state-keys="userRole,allowedRoles,isAllowed"
         data-permission-required={allowedRoles.join("|")}
+        data-permission-available={userRole ?? "GUEST"}
+        data-permission-result={isAllowed ? "allowed" : "denied"}
         hidden
       />
       {isAllowed ? children : fallback}

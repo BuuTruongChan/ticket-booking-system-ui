@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { HeaderOrganizerLink } from "@/components/auth/header-organizer-link";
 import { UserProfile } from "@/components/auth/user-profile";
-import { QueryProvider } from "@/components/providers/query-provider";
+import { QueryProvider } from "@/components/providers";
+import React from "react";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -15,7 +17,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Graduate Thesis Ticketing",
+  title: "Ticket Booking System",
   description: "Schema-first ticketing frontend",
 };
 
@@ -34,13 +36,16 @@ export default function RootLayout({
             <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3">
               <div>
                 <p className="text-sm font-medium text-foreground">
-                  Graduate Thesis Ticketing
+                  Ticket Booking System
                 </p>
                 <p className="text-xs text-muted-foreground">
                   Schema-first modular monolith
                 </p>
               </div>
-              <UserProfile />
+              <div className="flex items-center gap-2">
+                <HeaderOrganizerLink />
+                <UserProfile />
+              </div>
             </div>
           </header>
           {children}

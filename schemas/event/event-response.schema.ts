@@ -1,10 +1,18 @@
 import { z } from "zod";
 
-import { BaseResponseSchema, PagedResponseSchema } from "../api";
+import {
+  ApiContractEnvelopeSchema,
+  ApiPagedEnvelopeSchema,
+} from "@schemas/common";
 import { EventSchema } from "./event.schema";
 
-export const EventPagedListResultSchema = PagedResponseSchema(EventSchema);
+export const EventListResultSchema = ApiContractEnvelopeSchema(
+  z.array(EventSchema),
+);
+export type EventListResult = z.infer<typeof EventListResultSchema>;
+
+export const EventPagedListResultSchema = ApiPagedEnvelopeSchema(EventSchema);
 export type EventPagedListResult = z.infer<typeof EventPagedListResultSchema>;
 
-export const EventDetailResultSchema = BaseResponseSchema(EventSchema);
+export const EventDetailResultSchema = ApiContractEnvelopeSchema(EventSchema);
 export type EventDetailResult = z.infer<typeof EventDetailResultSchema>;

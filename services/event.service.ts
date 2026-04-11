@@ -1,38 +1,36 @@
 import { PAGINATION } from "@/core/constants";
-import { apiClient } from "@/lib/api-client";
-import { parseOrThrow } from "@/lib/api-utils";
+import { apiClient, parseOrThrow } from "@/lib/api";
+import {
+  getCatalogEventDetail,
+  getCatalogEvents,
+} from "@/services/catalog.service";
 import {
   CreateEventDTO,
   EventDetailResult,
   EventDetailResultSchema,
   EventPagedListResult,
-  EventPagedListResultSchema,
+  GetEventsParams,
   UpdateEventDTO,
-} from "@/schemas/event";
-import { GetEventsParams } from "@/schemas/event/event-search-params.schema";
+} from "@schemas/event";
 
 export const getEvents = async ({
   page = PAGINATION.DEFAULT_PAGE,
   limit = PAGINATION.DEFAULT_LIMIT,
   ...filters
 }: GetEventsParams): Promise<EventPagedListResult> => {
-  const response = await apiClient.get("/events", {
-    params: { page, limit, ...filters },
-  });
-  return parseOrThrow(EventPagedListResultSchema, response);
+  return getCatalogEvents({ page, limit, ...filters });
 };
 
 export const getEventDetail = async (
-  eventCode: string,
+  eventIdentifier: string,
 ): Promise<EventDetailResult> => {
-  const response = await apiClient.get(`/events/${eventCode}`);
-  return parseOrThrow(EventDetailResultSchema, response);
+  return getCatalogEventDetail(eventIdentifier);
 };
 
 export const createEvent = async (
   payload: CreateEventDTO,
 ): Promise<EventDetailResult> => {
-  const response = await apiClient.post("/events", payload);
+  const response = await apiClient.post("/catalog/events", payload);
   return parseOrThrow(EventDetailResultSchema, response);
 };
 
@@ -40,6 +38,9 @@ export const updateEvent = async (
   eventCode: string,
   payload: UpdateEventDTO,
 ): Promise<EventDetailResult> => {
-  const response = await apiClient.patch(`/events/${eventCode}`, payload);
+  const response = await apiClient.patch(
+    `/catalog/events/${eventCode}`,
+    payload,
+  );
   return parseOrThrow(EventDetailResultSchema, response);
 };

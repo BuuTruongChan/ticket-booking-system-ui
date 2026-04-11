@@ -1,33 +1,34 @@
 import { z } from "zod";
-import { BigIntIdSchema } from "../api";
+import { BigIntIdSchema, SoftDeletableBaseEntitySchema } from "@schemas/common";
 
-export enum EventStatus {
-  DRAFT = 0,
-  UPCOMING = 1,
-  ON_SALE = 2,
-  SOLD_OUT = 3,
-  FINISHED = 4,
-  CANCELLED = 5,
-}
+export const EventStatus = {
+  DRAFT: "DRAFT",
+  UPCOMING: "UPCOMING",
+  ON_SALE: "ON_SALE",
+  SOLD_OUT: "SOLD_OUT",
+  FINISHED: "FINISHED",
+  CANCELLED: "CANCELLED",
+} as const;
 
-export const EventSchema = z.object({
+export const EventStatusSchema = z.enum(EventStatus);
+export type EventStatus = z.infer<typeof EventStatusSchema>;
+
+export const EventSchema = SoftDeletableBaseEntitySchema.extend({
   id: BigIntIdSchema,
-
-  createdAt: z.iso.datetime().optional(),
-  updatedAt: z.iso.datetime().optional(),
-  deletedAt: z.iso.datetime().nullable().optional(),
-
   eventCode: z.string().max(32),
   eventName: z.string().max(255),
   desc: z.string().nullable().optional(),
   venue: z.string().max(255),
+  venueId: BigIntIdSchema.nullable().optional(),
+  organizerId: BigIntIdSchema.nullable().optional(),
 
   eventDate: z.iso.datetime(),
   saleStartDate: z.iso.datetime(),
   saleEndDate: z.iso.datetime(),
+  lobbyStartDate: z.iso.datetime().nullable().optional(),
 
-  status: z.enum(EventStatus),
-  slug: z.string(),
+  status: EventStatusSchema,
+  slug: z.string().min(1),
 });
 
 export type Event = z.infer<typeof EventSchema>;

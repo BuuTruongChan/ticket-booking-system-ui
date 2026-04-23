@@ -3,9 +3,14 @@ import { defineConfig } from "vitest/config";
 
 export default defineConfig({
   test: {
-    environment: "node",
+    environment: "jsdom",
     globals: true,
-    include: ["hooks/**/*.test.ts", "schemas/**/*.test.ts", "lib/**/*.test.ts"],
+    include: [
+      "hooks/**/*.test.ts",
+      "schemas/**/*.test.ts",
+      "lib/**/*.test.ts",
+      "components/**/*.test.tsx",
+    ],
     exclude: ["specs/**", "node_modules/**"],
     setupFiles: ["./vitest.setup.ts"],
     clearMocks: true,

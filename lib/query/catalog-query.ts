@@ -13,6 +13,8 @@ export type CatalogQueryState = {
   limit: number;
   search: string;
   status: EventStatusValue | "";
+  location: string;
+  category: string;
   dateFrom: string;
   dateTo: string;
 };
@@ -76,6 +78,8 @@ export function readCatalogQueryState(
     limit: parseLimit(searchParams.get("limit")),
     search,
     status: parseStatus(searchParams.get("status")),
+    location: normalizeTrimmed(searchParams.get("location")),
+    category: normalizeTrimmed(searchParams.get("category")),
     dateFrom: normalizedRange.dateFrom,
     dateTo: normalizedRange.dateTo,
   };
@@ -98,6 +102,14 @@ export function buildCatalogQueryString(state: CatalogQueryState): string {
 
   if (state.status) {
     params.set("status", state.status);
+  }
+
+  if (state.location.trim()) {
+    params.set("location", state.location.trim());
+  }
+
+  if (state.category.trim()) {
+    params.set("category", state.category.trim());
   }
 
   if (state.dateFrom.trim()) {

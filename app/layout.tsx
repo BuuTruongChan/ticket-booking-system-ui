@@ -18,7 +18,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Ticket Booking System",
-  description: "Schema-first ticketing frontend",
+  description: "Find your concerts, book your tickets, and enjoy the show!",
 };
 
 export default function RootLayout({
@@ -36,10 +36,14 @@ export default function RootLayout({
             <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3">
               <div>
                 <p className="text-sm font-medium text-foreground">
-                  Ticket Booking System
+                  {typeof metadata.title === "string"
+                    ? metadata.title
+                    : "Ticket Booking System"}
                 </p>
                 <p className="text-xs text-muted-foreground">
-                  Schema-first modular monolith
+                  {typeof metadata.description === "string"
+                    ? metadata.description
+                    : ""}
                 </p>
               </div>
               <div className="flex items-center gap-2">

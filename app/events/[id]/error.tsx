@@ -11,10 +11,7 @@ type EventDetailErrorProps = {
   reset: () => void;
 };
 
-export default function EventDetailError({
-  error: _error,
-  reset,
-}: EventDetailErrorProps) {
+export default function EventDetailError({ reset }: EventDetailErrorProps) {
   const copy = UI_MESSAGES.CATALOG_EVENT_DETAIL;
 
   return (

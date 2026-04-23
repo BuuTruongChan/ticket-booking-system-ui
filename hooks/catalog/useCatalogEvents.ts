@@ -10,6 +10,8 @@ export function useCatalogEvents(queryState: CatalogQueryState) {
   const filters = {
     search: queryState.search.trim() || undefined,
     status: queryState.status || undefined,
+    location: queryState.location.trim() || undefined,
+    category: queryState.category.trim() || undefined,
     dateFrom: queryState.dateFrom.trim() || undefined,
     dateTo: queryState.dateTo.trim() || undefined,
   };

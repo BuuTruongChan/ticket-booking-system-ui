@@ -18,6 +18,8 @@ export const GetEventsParamsSchema = EventPaginationQuerySchema.merge(
   DateRangeQuerySchema,
 ).extend({
   search: z.string().trim().min(1).optional(),
+  location: z.string().trim().min(1).optional(),
+  category: z.string().trim().min(1).optional(),
   status: z.enum(EventStatus).optional(),
 });
 

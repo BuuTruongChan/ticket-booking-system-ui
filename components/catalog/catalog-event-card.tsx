@@ -33,29 +33,35 @@ const EVENT_STATUS_VARIANTS: Record<
 export function CatalogEventCard({ event, queryState }: CatalogEventCardProps) {
   return (
     <Card
-      className="overflow-hidden transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg"
+      className="group overflow-hidden rounded-2xl border-border/60 bg-card/95 transition-all duration-200 hover:-translate-y-1 hover:shadow-xl"
       data-agent-type="state-display"
       data-entity-type="catalog-event-card"
       data-entity-id={event.id}
       data-state-keys="eventName,eventCode,venue,eventDate,status"
     >
+      <div className="h-24 bg-gradient-to-r from-blue-600 via-indigo-600 to-violet-600" />
       <CardHeader className="space-y-3">
-        <div className="flex items-start justify-between gap-3">
-          <div className="space-y-1">
-            <p className="text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground">
-              Event preview
+        <div className="-mt-9 flex items-start justify-between gap-3">
+          <div className="rounded-lg border border-white/30 bg-white/90 px-3 py-1.5 shadow-sm backdrop-blur dark:border-white/10 dark:bg-slate-900/90">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-muted-foreground">
+              Event code
             </p>
-            <CardTitle className="text-lg leading-tight">
-              {event.eventName}
-            </CardTitle>
+            <p className="font-mono text-xs text-foreground">
+              {event.eventCode}
+            </p>
           </div>
           <Badge variant={EVENT_STATUS_VARIANTS[event.status]}>
             {event.status.replaceAll("_", " ")}
           </Badge>
         </div>
-        <p className="text-sm text-muted-foreground">
-          Code <span className="font-mono">{event.eventCode}</span>
-        </p>
+        <div className="space-y-1">
+          <p className="text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground">
+            Live event
+          </p>
+          <CardTitle className="text-xl leading-tight transition-colors group-hover:text-primary">
+            {event.eventName}
+          </CardTitle>
+        </div>
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="grid gap-3 text-sm sm:grid-cols-2">
@@ -88,13 +94,13 @@ export function CatalogEventCard({ event, queryState }: CatalogEventCardProps) {
         <Link href={withCatalogQuery(`/events/${event.eventCode}`, queryState)}>
           <Button
             className="w-full"
-            variant="outline"
+            variant="default"
             data-agent-type="action"
             data-entity-type="catalog-event-link"
             data-entity-id={event.eventCode}
             data-mutation-trigger="open-event-detail"
           >
-            View Event
+            See tickets
           </Button>
         </Link>
       </CardContent>

@@ -22,11 +22,13 @@ export function CatalogEventGrid({
   }
 
   return (
-    <div className="space-y-3">
+    <div className="space-y-4">
       {isRefreshing ? (
-        <p className="text-xs text-muted-foreground">Updating results...</p>
+        <p className="text-xs font-medium tracking-wide text-muted-foreground">
+          Updating results...
+        </p>
       ) : null}
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
         {events.map((event) => (
           <CatalogEventCard
             key={event.id}

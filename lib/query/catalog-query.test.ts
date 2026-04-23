@@ -28,6 +28,8 @@ describe("catalog-query", () => {
       limit: 20,
       search: "festival",
       status: "ON_SALE",
+      location: "",
+      category: "",
       dateFrom: "2026-04-01",
       dateTo: "2026-04-30",
     });
@@ -45,6 +47,8 @@ describe("catalog-query", () => {
       limit: PAGINATION.DEFAULT_LIMIT,
       search: "",
       status: "",
+      location: "",
+      category: "",
       dateFrom: "",
       dateTo: "",
     });
@@ -62,6 +66,8 @@ describe("catalog-query", () => {
       limit: PAGINATION.DEFAULT_LIMIT,
       search: "spring",
       status: "",
+      location: "",
+      category: "",
       dateFrom: "2026-05-01",
       dateTo: "2026-05-31",
     });
@@ -73,12 +79,14 @@ describe("catalog-query", () => {
       limit: 20,
       search: "summer night",
       status: "UPCOMING",
+      location: "ho chi minh",
+      category: "Concert",
       dateFrom: "2026-05-01",
       dateTo: "2026-05-31",
     });
 
     expect(query).toBe(
-      "page=2&limit=20&search=summer+night&status=UPCOMING&dateFrom=2026-05-01&dateTo=2026-05-31",
+      "page=2&limit=20&search=summer+night&status=UPCOMING&location=ho+chi+minh&category=Concert&dateFrom=2026-05-01&dateTo=2026-05-31",
     );
   });
 });

@@ -1,5 +1,17 @@
 # Dev Log
 
+## REF-007 — 2026-04-23
+
+**Status:** Done
+**Changed:**
+
+- New `components/catalog/catalog-hero.tsx` — hero section (dark gradient, title, tagline, active filter badge, role badge); no `"use client"` needed
+- New `components/catalog/catalog-active-filters.tsx` — exports `ActiveFilterKey` type and `CatalogActiveFilters`; renders pill-row of active filter tags with individual clear buttons; returns null when no filters are active
+- New `components/catalog/catalog-filter-panel.tsx` — filter overlay extracted from `catalog-home-page.tsx`; `CATEGORY_OPTIONS` moved here; Apply button remains `type="submit"` so it submits the parent `<form>` in `CatalogHomePage`; kept as fixed inset-0 overlay (not converted to Dialog)
+- `components/catalog/catalog-home-page.tsx` — full rewrite as coordinator (~330 lines); imports above three plus existing `PaginationControls`; `CatalogLoadingState`/`CatalogErrorState` kept as inner functions; `handleSearchInputChange` dep array simplified to `[catalogQueryState, replaceSearchParams]`; `CatalogEventGrid` import changed to barrel `@/components/catalog` to stay compatible with existing vi.mock in tests
+  **Tests:** 18/18 pass | typecheck: 0 errors
+  **Notes:** Test mock was targeting the barrel (`@/components/catalog`) — direct-path import in the rewrite broke the mock. Fixed by reverting `CatalogEventGrid` import to barrel path. No other test changes needed.
+
 ## REF-006 — 2026-04-23
 
 **Status:** Done

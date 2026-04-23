@@ -11,7 +11,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { Search, SlidersHorizontal } from "lucide-react";
 
 import { CatalogActiveFilters } from "@/components/catalog/catalog-active-filters";
-import { CatalogEventGrid } from "@/components/catalog/catalog-event-grid";
+import { CatalogEventGrid } from "@/components/catalog";
 import { CatalogFilterPanel } from "@/components/catalog/catalog-filter-panel";
 import { CatalogHero } from "@/components/catalog/catalog-hero";
 import { PaginationControls } from "@/components/shared/pagination-controls";
